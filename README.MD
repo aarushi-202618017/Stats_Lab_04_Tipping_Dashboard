@@ -1,4 +1,5 @@
-# Restaurant Tipping Analytics Dashboard
+# https://statslab04tippingdashboard-ptgjxxnpkknkargfa7csji.streamlit.app/
+# Restaurant Tipping Analytics LIVE Dashboard
 
 Interactive Streamlit application built for statistical analysis, parametric/non-parametric hypothesis testing, and OLS regression diagnostics on the Seaborn tips dataset.
 
