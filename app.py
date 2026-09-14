@@ -104,19 +104,28 @@ with tab2:
             st.error(f"Conclusion: Reject H0 at α = 0.05. Statistically significant difference in {num_target} between {groups[0]} and {groups[1]}.")
         else:
             st.success(f"Conclusion: Fail to Reject H0 at α = 0.05. No significant difference detected in {num_target} between groups.")
+    else:
+        st.warning("⚠️ Group comparison requires exactly two categories. Adjust your filters in the sidebar.")
 
     st.markdown("---")
     st.subheader("Hypothesis Test 2: One-Way ANOVA across Days")
-    day_groups = [group[num_target].values for name, group in filtered_df.groupby('day')]
-    f_stat, p_val_anova = stats.f_oneway(*day_groups)
     
-    st.write(f"**Test:** One-Way ANOVA across days for `{num_target}`")
-    st.write(f"**F-Statistic:** {f_stat:.4f} | **p-value:** {p_val_anova:.4f}")
+    # Check if there are at least 2 distinct days available
+    available_days = filtered_df['day'].nunique()
     
-    if p_val_anova < 0.05:
-        st.error("Conclusion: Reject H0 at α = 0.05. Mean target value differs significantly across days.")
+    if available_days < 2:
+        st.warning("⚠️ One-Way ANOVA requires comparison across at least 2 days. Please select more than one day in the sidebar filter.")
     else:
-        st.success("Conclusion: Fail to Reject H0 at α = 0.05. No statistically significant difference across days.")
+        day_groups = [group[num_target].values for name, group in filtered_df.groupby('day')]
+        f_stat, p_val_anova = stats.f_oneway(*day_groups)
+        
+        st.write(f"**Test:** One-Way ANOVA across days for `{num_target}`")
+        st.write(f"**F-Statistic:** {f_stat:.4f} | **p-value:** {p_val_anova:.4f}")
+        
+        if p_val_anova < 0.05:
+            st.error("Conclusion: Reject H0 at α = 0.05. Mean target value differs significantly across days.")
+        else:
+            st.success("Conclusion: Fail to Reject H0 at α = 0.05. No statistically significant difference across days.")
 
 # ---------------------------------------------------------
 # TAB 3: LIVE PREDICTION & DIAGNOSTICS
