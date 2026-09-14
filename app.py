@@ -105,7 +105,7 @@ with tab2:
         else:
             st.success(f"Conclusion: Fail to Reject H0 at α = 0.05. No significant difference detected in {num_target} between groups.")
     else:
-        st.warning("⚠️ Group comparison requires exactly two categories. Adjust your filters in the sidebar.")
+        st.warning("Group comparison requires exactly two categories. Adjust your filters in the sidebar.")
 
     st.markdown("---")
     st.subheader("Hypothesis Test 2: One-Way ANOVA across Days")
@@ -114,7 +114,7 @@ with tab2:
     available_days = filtered_df['day'].nunique()
     
     if available_days < 2:
-        st.warning("⚠️ One-Way ANOVA requires comparison across at least 2 days. Please select more than one day in the sidebar filter.")
+        st.warning("One-Way ANOVA requires comparison across at least 2 days. Please select more than one day in the sidebar filter.")
     else:
         day_groups = [group[num_target].values for name, group in filtered_df.groupby('day')]
         f_stat, p_val_anova = stats.f_oneway(*day_groups)
